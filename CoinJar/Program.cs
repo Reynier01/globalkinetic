@@ -21,6 +21,7 @@ namespace CoinJar
                 Console.WriteLine("Valid Coin Types: [cent/penny, nickel, dime, quarter, halfdollar, dollar]");
                 Console.WriteLine("Enter Coin Type (q to quit):");
                 coinType = Console.ReadLine();
+                Console.Clear();
                 switch (coinType.ToLower())
                 {
                     case "cent":

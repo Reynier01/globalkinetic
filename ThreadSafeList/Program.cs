@@ -11,6 +11,8 @@ namespace ThreadSafeList
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Press any key to start.");
+            Console.ReadLine();
             Thread[] tWrites = new Thread[1000];
             Thread[] tReads = new Thread[1000];
             // Using "lock"
@@ -22,7 +24,11 @@ namespace ThreadSafeList
             for (int i = 0; i < tWrites.Length; i++)
             {
                 Thread tw = new Thread(() => noLockList.AddString(DateTime.Now.ToString()));
-                Thread tr = new Thread(() => Console.WriteLine(noLockList.ToString()));
+                Thread tr = new Thread(() =>
+                {
+                    noLockList.ToString();
+                    Console.Write(".");
+                });
                 tWrites[i] = tw;
                 tReads[i] = tr;
             }
@@ -40,8 +46,8 @@ namespace ThreadSafeList
             }
 
             Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine($"** Final Items: {noLockList.ToString()}");
+            Console.WriteLine("** Final Items:");
+            Console.WriteLine(noLockList.ToString());
             Console.ReadLine();
         }
     }
@@ -63,7 +69,7 @@ namespace ThreadSafeList
         public void AddString(string s)
         {
             // Lock the "Add" method for other threads
-            lock(internalCollection)
+            lock (internalCollection)
             {
                 internalCollection.Add(s);
             }
